@@ -2,10 +2,115 @@
 <html lang="en">
 <head>
     <title>Exercise 2</title>
+    <style> 
+        .kalkulator{
+            background-color: aliceblue;
+            display: inline-block;
+            box-sizing: border-box;
+            padding: 0px 16px;
+            min-width: 140px;
+            min-height: 300px;
+        }
+        .kalkulator div{
+            margin: 16px 0px;
+        }
+        input[type="number"]{
+            box-sizing: border-box;
+            display: block;
+            width: 140px;
+            height: 32px;
+            font-size: 1em;
+            text-align: right;
+        }
+        input[type="button"]{
+            display: inline-block;
+            height: 32px;
+            width: 32px;
+            font-size: 1em;
+            border-radius: 0;
+            -webkit-appearance: none;;
+        }
+        #nol{
+            width: 68px; 
+        }
+        #hasil{
+            width: 68px; 
+        }
+    </style>
 </head>
 <body>
-    <center>
-        <h1>Kalkulator</h1>
-    </center>
-</body>
+    <h1>Kalkulator</h1>
+    <!-- membuat kalkulator -->
+    <div class="kalkulator">
+        <div>
+            <input type="number">
+            <input type="number">
+        </div>
+        <div>
+            <input type="button" value="0">
+            <input type="button" value="0">
+            <input type="button" value="=">
+            <input type="button" value="=">
+        </div>
+        <div>
+            <input type="button" value="7">
+            <input type="button" value="8">
+            <input type="button" value="9">
+            <input type="button" value="DEL">
+        </div>
+        <div>
+            <input type="button" value="4">
+            <input type="button" value="5">
+            <input type="button" value="6">
+            <input type="button" value="<">
+        </div>
+        <div>
+            <input type="button" value="1">
+            <input type="button" value="2">
+            <input type="button" value="3">
+            <input type="button" value="<">
+        </div>
+        <div>
+            <input type="button" value="0" id="nol">
+            <input type="button" value="=" id="hasil">
+        </div>
+    </div>
+ </body>
+<script>
+    var minimum = 8;
+    var total = 0;
+    
+    var tampil = () =>{
+        
+    }
+
+    document.getElementById('hasil').onclick = () => {
+        var operator = document.getElementById('operator').value;
+        var v1 = parseInt(document.getElementById('v1').value);
+        var v2 = parseInt(document.getElementById('v2').value);
+        switch (operator) {
+        case '+':
+            total = v1 + v2;
+            break;
+        case '-':
+            total = v1 - v2;            
+            break;
+        case '/':
+            total = v1 / v2;            
+            break;
+        case '%':
+            total = v1 % v2;            
+            break;
+        case '*':
+            total = v1 * v2;            
+            break;
+        default:
+            alert('salah operator');
+            break;
+        }
+        console.log('');
+    }
+    
+    
+</script>
 </html>
