@@ -14,7 +14,7 @@
         .kalkulator div{
             margin: 16px 0px;
         }
-        input[type="number"]{
+        input[type="text"]{
             box-sizing: border-box;
             display: block;
             width: 140px;
@@ -30,10 +30,10 @@
             border-radius: 0;
             -webkit-appearance: none;;
         }
-        #nol{
+        div .nol{
             width: 68px; 
         }
-        #hasil{
+        div .hasil{
             width: 68px; 
         }
     </style>
@@ -43,74 +43,101 @@
     <!-- membuat kalkulator -->
     <div class="kalkulator">
         <div>
-            <input type="number">
-            <input type="number">
+            <input type="text" disabled id="input">
+            <input type="text" disabled id="output">
         </div>
         <div>
-            <input type="button" value="0">
-            <input type="button" value="0">
-            <input type="button" value="=">
-            <input type="button" value="=">
+            <input type="button" onclick="inputOperator('c')" value="C">
+            <input type="button" onclick="inputOperator('*')" value="X">
+            <input type="button" onclick="inputOperator('/')" value="/">
+            <input type="button" onclick="inputOperator('<')" value="<">
         </div>
         <div>
-            <input type="button" value="7">
-            <input type="button" value="8">
-            <input type="button" value="9">
-            <input type="button" value="DEL">
+            <input type="button" onclick="inputNumber('7')" value="7">
+            <input type="button" onclick="inputNumber('8')" value="8">
+            <input type="button" onclick="inputNumber('9')" value="9">
+            <input type="button" onclick="inputOperator('+')" value="+">
         </div>
         <div>
-            <input type="button" value="4">
-            <input type="button" value="5">
-            <input type="button" value="6">
-            <input type="button" value="<">
+            <input type="button" onclick="inputNumber(4)" value="4">
+            <input type="button" onclick="inputNumber(5)" value="5">
+            <input type="button" onclick="inputNumber(6)" value="6">
+            <input type="button" onclick="inputOperator('-')" value="-">
         </div>
         <div>
-            <input type="button" value="1">
-            <input type="button" value="2">
-            <input type="button" value="3">
-            <input type="button" value="<">
+            <input type="button" onclick="inputNumber(1)" value="1">
+            <input type="button" onclick="inputNumber(2)" value="2">
+            <input type="button" onclick="inputNumber(3)" value="3">
+            <input type="button" onclick="inputOperator('()')" value="()">
         </div>
         <div>
-            <input type="button" value="0" id="nol">
-            <input type="button" value="=" id="hasil">
+            <input type="button" onclick="inputNumber(0)" value="0" class="nol">
+            <input type="button" onclick="inputOperator('=')" value="=" class="hasil">
         </div>
     </div>
  </body>
 <script>
-    var minimum = 8;
-    var total = 0;
-    
-    var tampil = () =>{
-        
-    }
+    var input = document.getElementById('input');
+    var output = document.getElementById('output');
+    var kurung = false;
 
-    document.getElementById('hasil').onclick = () => {
-        var operator = document.getElementById('operator').value;
-        var v1 = parseInt(document.getElementById('v1').value);
-        var v2 = parseInt(document.getElementById('v2').value);
-        switch (operator) {
-        case '+':
-            total = v1 + v2;
-            break;
-        case '-':
-            total = v1 - v2;            
-            break;
-        case '/':
-            total = v1 / v2;            
-            break;
-        case '%':
-            total = v1 % v2;            
-            break;
-        case '*':
-            total = v1 * v2;            
-            break;
-        default:
-            alert('salah operator');
-            break;
-        }
-        console.log('');
+    function inputNumber(number) {
+        var text = document.getElementById('input').value;
+        text += number;
+        input.setAttribute('value',text);
     }
-    
-    
+    function inputOperator(operator) {
+        var text = document.getElementById('input').value;
+        switch (operator) {
+            case 'c':
+                input.setAttribute('value','');
+                output.setAttribute('value','');
+                kurung = false;            
+                break;
+        
+            case '<':
+                var lengthTxt = text.length;
+                if(lengthTxt > 0){
+                    input.setAttribute('value',text.substring(0, lengthTxt-1));
+                }else{
+                    input.setAttribute('value',text);
+                }
+                break;
+            case '()':
+                if(kurung == true){
+                    text += ')';
+                    input.setAttribute('value',text);
+                    kurung  = false;
+                }else{
+                    text += '(';
+                    input.setAttribute('value',text);
+                    kurung = true;
+                }
+                break;
+            case '=':
+                if(text != ''){
+                    try {
+                        ans = Math.floor(+eval(text));
+                    } catch (error) {
+                        alert('Input Tidak Bisa Diproses')
+                        input.setAttribute('value','');
+                        output.setAttribute('value','');
+                        kurung = false;
+                        break;
+                    }
+                    output.setAttribute('value', ans);
+                }else{
+                    input.setAttribute('value','');
+                    output.setAttribute('value','');
+                    kurung = false;
+                    break;
+                }
+                break;
+            default:
+                text += operator;
+                input.setAttribute('value',text);
+                break;
+        }
+    }
 </script>
 </html>
